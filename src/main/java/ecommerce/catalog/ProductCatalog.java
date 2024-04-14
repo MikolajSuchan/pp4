@@ -1,41 +1,37 @@
 package ecommerce.catalog;
 
-import ecommerce.catalog.Product;
-
 import java.math.BigDecimal;
 import java.util.*;
 
 public class ProductCatalog {
-    private final ArrayList<Product> products;
+
+    ProductStorage productStorage;
+
 
     public ProductCatalog() {
-        this.products = new ArrayList<>();
+        this.productStorage = productStorage;
     }
 
     public List<Product> allProducts() {
-        return Collections.unmodifiableList(products);
+        return productStorage.allProducts();
     }
 
-    public String addProduct(String name, String description){
+    public String addProduct(String name, String description) {
+        UUID id = UUID.randomUUID();
 
-        UUID id= UUID.randomUUID();
+        Product newProduct = new Product(id, name, description);
+        productStorage.add(newProduct);
 
-        Product newProduct=new Product(id,name,description);
-
-        products.add(newProduct);
-
-        return id.toString();
-
+        return newProduct.getId();
     }
 
     public Product getProductBy(String id) {
-        return products.stream().filter(product-> product.getId().equals(id)).findFirst().get();
+        return productStorage.getProductBy(id);
     }
 
-    public void changePrice(String id, BigDecimal price) {
-        Product loadedProduct = getProductBy(id);
-        loadedProduct.changePrice(price);
+    public void changePrice(String id, BigDecimal newPrice) {
+        Product loaded = this.getProductBy(id);
+        loaded.changePrice(newPrice);
     }
-
 }
 
