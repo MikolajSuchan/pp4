@@ -3,7 +3,7 @@ package ecommerce.catalog;
 import java.util.HashMap;
 import java.util.List;
 
-public class HashMapProductStorage implements ProductStorage {
+public class HashMapProductStorage extends ArrayListProductStorage implements ProductStorage {
     HashMap<String, Product> products;
 
     // TODO missing function (constructor?)

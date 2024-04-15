@@ -8,8 +8,7 @@ public class ProductCatalog {
     ProductStorage productStorage;
 
 
-    public ProductCatalog() {
-        this.productStorage = productStorage;
+    public ProductCatalog(ArrayListProductStorage hashMapProductStorage) {
     }
 
     public List<Product> allProducts() {

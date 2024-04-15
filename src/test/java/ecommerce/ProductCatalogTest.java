@@ -1,9 +1,10 @@
 package ecommerce;
 
+import ecommerce.catalog.HashMapProductStorage;
 import ecommerce.catalog.Product;
 import ecommerce.catalog.ProductCatalog;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
 import static org.assertj.core.api.Assertions.*;
 
 import java.math.BigDecimal;
@@ -55,6 +56,6 @@ public class ProductCatalogTest {
     }
 
     private static ProductCatalog thereIsProductCatalog() {
-        return new ProductCatalog();
+        return new ProductCatalog(new HashMapProductStorage());
     }
 }
