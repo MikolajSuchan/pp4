@@ -5,10 +5,10 @@ import ecommerce.catalog.Product;
 import ecommerce.catalog.ProductCatalog;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.math.BigDecimal;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProductCatalogTest {
 

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ArrayListProductStorage implements ProductStorage {
-    private final ArrayList<Product> products;
+    private ArrayList<Product> products;
 
     public ArrayListProductStorage() {
         this.products = new ArrayList<>();

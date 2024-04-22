@@ -8,7 +8,8 @@ public class ProductCatalog {
     ProductStorage productStorage;
 
 
-    public ProductCatalog(ArrayListProductStorage hashMapProductStorage) {
+    public ProductCatalog(ProductStorage productStorage) {
+        this.productStorage = productStorage;
     }
 
     public List<Product> allProducts() {
@@ -33,4 +34,3 @@ public class ProductCatalog {
         loaded.changePrice(newPrice);
     }
 }
-

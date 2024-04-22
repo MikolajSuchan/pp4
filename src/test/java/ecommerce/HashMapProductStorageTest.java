@@ -16,7 +16,6 @@ public class HashMapProductStorageTest {
         Product product = thereIsExampleProduct();
         ProductStorage hashmapStorage = thereIsHashMapStorage();
         //Act
-        assert hashmapStorage != null;
         hashmapStorage.add(product);
         //Assert
         List<Product> products = hashmapStorage.allProducts();
@@ -25,7 +24,7 @@ public class HashMapProductStorageTest {
                 .extracting(Product::getName)
                 .contains("test-it");
 
-//        Product = new Product(UUID.randomUUID(), "test it", "desc");
+//        Product testProduct = new Product(UUID.randomUUID(), "test it", "desc");
 
     }
 
