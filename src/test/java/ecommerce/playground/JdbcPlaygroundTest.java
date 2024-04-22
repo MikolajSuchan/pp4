@@ -19,4 +19,13 @@ public class JdbcPlaygroundTest {
         var currentDate = jdbcTemplate.queryForObject("select now() my_date", String.class);
         assert currentDate.contains("2024");
     }
+
+    @Test
+    void itCreatesTable(){
+        var createTableSql = "CREATE TABLE `product_catalog__products`("+"`id` varchar(255) NOT NULL,"+"`name` varchar(255) NOT NULL,"+"`price` DECIMAL(12,2),"+"PRIMARY KEY (id)"+");";
+
+        jdbcTemplate.execute(createTableSql);
+    }
+
+
 }
