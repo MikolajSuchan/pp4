@@ -81,22 +81,22 @@ public class JdbcPlaygroundTest {
 
     @Test
     void selectForProdutcs(){
-        var insertsql="INSERT INTO `product_catalog__products` (id,name,price)"+"VALUES"+"('product_1','my_product 1',20.25),"+"('product_2','my_product 2',13.30)";
+        var insertsql = "INSERT INTO `product_catalog__products` (id, name, price) VALUES ('product_1', 'my_product 1', 20.25), ('product_2', 'my_product 2', 13.30);";
         jdbcTemplate.execute(insertsql);
         var selectSql="select * from `product_catalog__products` where id = ?";
-        Product myProduct = jdbcTemplate.queryForObject(
+        var myProduct = jdbcTemplate.queryForObject(
                 selectSql,
                 new Object[]{"product_1"},
                 (rs,i)->{
                     var myResult=new Product(UUID.randomUUID(),
                             rs.getString("name"),
                             rs.getString("name")
-                            );
+                    );
                     myResult.changePrice(BigDecimal.valueOf(rs.getDouble("price")));
 
                     return myResult;
                 }
         );
-        assertThat(myProduct.getName()).isEqualTo("my_product_1");
+        assertThat(myProduct.getName()).isEqualTo("my_product 1");
     }
 }
