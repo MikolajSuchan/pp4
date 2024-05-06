@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class ProductCatalog {
-
     ProductStorage productStorage;
-
 
     public ProductCatalog(ProductStorage productStorage) {
         this.productStorage = productStorage;
@@ -20,17 +18,19 @@ public class ProductCatalog {
         UUID id = UUID.randomUUID();
 
         Product newProduct = new Product(id, name, description);
-        productStorage.add(newProduct);
 
-        return newProduct.getId();
+        productStorage.addProduct(newProduct);
+
+        return id.toString();
     }
 
     public Product getProductBy(String id) {
         return productStorage.getProductBy(id);
     }
 
-    public void changePrice(String id, BigDecimal newPrice) {
-        Product loaded = this.getProductBy(id);
-        loaded.changePrice(newPrice);
+    public void changePrice(String id, BigDecimal price) {
+        Product loadedProduct = getProductBy(id);
+        loadedProduct.changePrice(price);
     }
+
 }

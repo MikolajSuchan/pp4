@@ -7,7 +7,6 @@ import java.util.List;
 
 @RestController
 public class ProductCatalogController {
-
     ProductCatalog catalog;
 
     public ProductCatalogController(ProductCatalog catalog) {
@@ -15,9 +14,7 @@ public class ProductCatalogController {
     }
 
     @GetMapping("/api/products")
-    List<Product> allProducts() {
+    List<Product> allProducts(){
         return catalog.allProducts();
     }
-
-
 }

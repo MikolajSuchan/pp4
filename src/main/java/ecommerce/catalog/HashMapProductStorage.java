@@ -3,7 +3,7 @@ package ecommerce.catalog;
 import java.util.HashMap;
 import java.util.List;
 
-public class HashMapProductStorage implements ProductStorage {
+public class HashMapProductStorage implements  ProductStorage{
     HashMap<String, Product> products;
 
     public HashMapProductStorage() {
@@ -13,12 +13,11 @@ public class HashMapProductStorage implements ProductStorage {
     @Override
     public List<Product> allProducts() {
         return products.values()
-                .stream()
-                .toList();
+                .stream().toList();
     }
 
     @Override
-    public void add(Product newProduct) {
+    public void addProduct(Product newProduct) {
         products.put(newProduct.getId(), newProduct);
     }
 
