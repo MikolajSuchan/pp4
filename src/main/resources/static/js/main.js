@@ -1,5 +1,10 @@
-getProducts = () => {
+const getProducts = () => {
     return fetch("/api/products")
+        .then(response => response.json());
+}
+
+const getCurrentOffer = () => {
+    return fetch("/api/current-offer")
         .then(response => response.json());
 }
 

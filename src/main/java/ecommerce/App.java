@@ -1,5 +1,6 @@
 package ecommerce;
 
+import ecommerce.sales.SalesFacade;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +20,12 @@ public class App {
     ProductCatalog createMyProductCatalog() {
         ProductCatalog productCatalog = new ProductCatalog(new ArrayListProductStorage());
         productCatalog.addProduct("Lego set 1", "ok");
-        productCatalog.addProduct("Cobi set 1", "Nice");
+        productCatalog.addProduct("Cobi set 2", "Nice");
 
         return productCatalog;
+    }
+    @Bean
+    SalesFacade createMySalesFacade() {
+        return new SalesFacade();
     }
 }
