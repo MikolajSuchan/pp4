@@ -19,8 +19,9 @@ public class App {
     @Bean
     ProductCatalog createMyProductCatalog() {
         ProductCatalog productCatalog = new ProductCatalog(new ArrayListProductStorage());
-        productCatalog.addProduct("Lego set 1", "ok");
-        productCatalog.addProduct("Cobi set 2", "Nice");
+        productCatalog.addProduct("set 1", "Decent");
+        productCatalog.addProduct("set 2", "Nice");
+        productCatalog.addProduct("set 3", "Nice one");
 
         return productCatalog;
     }

@@ -1,7 +1,5 @@
-package ecommerce;
+package ecommerce.sales;
 
-import ecommerce.sales.Offer;
-import ecommerce.sales.SalesFacade;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -11,8 +9,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SalesTest {
     @Test
     void itAddProductToCart() {
-        SalesFacade sales = thereIsSalesFacade();
+        var customerId=thereIsExampleCustomer("Mikołaj");
+        var productId=thereIsProduct("product a",BigDecimal.valueOf(10));
+        SalesFacade sales=thereIsSalesFacade();
 
+        Offer currentOffer=sales.getCurrentOffer(customerId);
+        assertEquals(BigDecimal.valueOf(10),currentOffer.getTotal());
+        assertEquals(0,currentOffer.getItemsCount());
+
+
+    }
+
+    private Object thereIsProduct(String name, BigDecimal value) {
+        return null;
     }
 
     private SalesFacade thereIsSalesFacade() {
@@ -41,6 +50,12 @@ public class SalesTest {
 
     @Test
     void itAllowToAcceptOffer() {
+
+    }
+
+    @Test
+    void itAllowToPayForReservation(){
+
     }
 
 }

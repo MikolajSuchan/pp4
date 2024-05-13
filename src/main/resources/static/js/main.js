@@ -11,7 +11,7 @@ const getCurrentOffer = () => {
 createProductHtmlEl = (productData) => {
     const template = `
         <div>
-            <img src="https://www.pastelowelove.pl/userdata/public/gfx/5582/kotek-mruczek--naklejka.-naklejka-dla-dzieci.-dekoracje-pokoju.jpg" width="200" height="200">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThtvTcTtNhsHpbjUJA5zozfapMee2a9MsxXRP4MPxNgQ&s" width="200" height="200">
             <h4>${productData.name}</h4>
             <span>${productData.description}</span>
             <span>${productData.price}</span>

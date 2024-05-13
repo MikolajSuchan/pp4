@@ -1,6 +1,8 @@
 package ecommerce.sales;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,7 +20,24 @@ public class SalesController {
 
     }
 
+    @PostMapping("/api/accept-offer")
+    ReservationDetail acceptOffer(AcceptOfferRequest acceptOfferRequest) {
+        String customerId = getCurrentCustomerId();
+        ReservationDetail reservationDetails=acceptOfffer(customerId,acceptOfferRequest);
+        return reservationDetails;
+    }
+
+    private ReservationDetail acceptOfffer(String customerId, AcceptOfferRequest acceptOfferRequest) {
+        return new ReservationDetail();
+    }
+
     private String getCurrentCustomerId() {
-        return "Kuba";
+        return "Mikołaj";
+    }
+
+    @PostMapping("/api/add-to-cart/{productId}")
+    void addToCart(@PathVariable String productId){
+        String customerId = getCurrentCustomerId();
+        salesFacade.addToCart(customerId,productId);
     }
 }
