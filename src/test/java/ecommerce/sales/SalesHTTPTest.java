@@ -49,7 +49,7 @@ public class SalesHTTPTest {
 
     }
     private String thereIsExampleProduct(String name, BigDecimal price) {
-        var id = catalog.addProduct(name, name);
+        var id = catalog.addProduct(name, name,price);
         catalog.changePrice(id, price);
         return "Products";
     }
