@@ -38,6 +38,6 @@ public class SalesController {
     }
 
     private String getCurrentCustomerId() {
-        return "Amanda";
+        return "Mikołaj";
     }
 }

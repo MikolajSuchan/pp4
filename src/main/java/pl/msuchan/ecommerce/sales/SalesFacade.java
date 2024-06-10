@@ -14,12 +14,17 @@ public class SalesFacade {
     }
 
     public void addToCart(String customerId, String productId) {
+        Cart cart= loadCartForCustomer(customerId);
+
+        cart.add(productId);
+        cartStorage.save(customerId,cart);
 
     }
 
     private Cart loadCartForCustomer(String customerId) {
-        return null;//cartStorage.fundByCutomer(customerId)
-                //.orElse(Cart.empty());
+        return cartStorage.findByCustomer(customerId).
+                orElse(Cart.empty());
+
     }
 
     public ReservationDetail acceptOffer(String customerId, AcceptOfferRequest acceptOfferRequest) {
