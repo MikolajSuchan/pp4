@@ -1,10 +1,11 @@
 package pl.msuchan.ecommerce.catalog;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 public class ProductCatalog {
-    ProductStorage productStorage;
+    private final ProductStorage productStorage;
 
     public ProductCatalog(ProductStorage productStorage) {
         this.productStorage = productStorage;
@@ -14,14 +15,14 @@ public class ProductCatalog {
         return productStorage.allProducts();
     }
 
-    public String addProduct(String name, String description,BigDecimal price) {
+    public String addProduct(String name, String description) {
         UUID id = UUID.randomUUID();
 
-        Product newProduct = new Product(id, name, description,price);
+        Product newProduct = new Product(id, name, description);
 
         productStorage.addProduct(newProduct);
 
-        return id.toString();
+        return newProduct.getId();
     }
 
     public Product getProductBy(String id) {
@@ -29,7 +30,7 @@ public class ProductCatalog {
     }
 
     public void changePrice(String id, BigDecimal price) {
-        Product loadedProduct = getProductBy(id);
+        Product loadedProduct = productStorage.getProductBy(id);
         loadedProduct.changePrice(price);
     }
 

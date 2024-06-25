@@ -1,4 +1,4 @@
-package pl.msuchan.ecommerce.sales.payu;
+package pl.msuchan.ecommerce.payu;
 
 public class OrderCreateResponse {
     Status status;
@@ -13,9 +13,17 @@ public class OrderCreateResponse {
         return this;
     }
 
+    public String getRedirectUri() {
+        return redirectUri;
+    }
+
     public OrderCreateResponse setRedirectUri(String redirectUri) {
         this.redirectUri = redirectUri;
         return this;
+    }
+
+    public String getOrderId() {
+        return orderId;
     }
 
     public OrderCreateResponse setOrderId(String orderId) {
@@ -30,14 +38,6 @@ public class OrderCreateResponse {
     public OrderCreateResponse setExtOrderId(String extOrderId) {
         this.extOrderId = extOrderId;
         return this;
-    }
-
-    public Object getRedirectUri() {
-        return null;
-    }
-
-    public Object getOrderId() {
-        return null;
     }
 }
 

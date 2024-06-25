@@ -1,13 +1,9 @@
-package pl.msuchan.ecommerce.sales.payu;
+package pl.msuchan.ecommerce.payu;
 
 public class AccessTokenResponse {
     String access_token;
 
     public String getAccessToken() {
-        return access_token;
-    }
-
-    public String getAccess_token() {
         return access_token;
     }
 

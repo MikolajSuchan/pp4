@@ -1,9 +1,5 @@
 package pl.msuchan.ecommerce.sales;
 
-
-import pl.msuchan.ecommerce.catalog.ProductCatalog;
-import pl.msuchan.ecommerce.sales.offering.AcceptOfferRequest;
-import pl.msuchan.ecommerce.sales.reservation.ReservationDetail;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,48 +7,66 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import pl.msuchan.ecommerce.catalog.ProductCatalog;
+import pl.msuchan.ecommerce.sales.offering.Offer;
+import pl.msuchan.ecommerce.sales.reservation.AcceptOfferRequest;
+import pl.msuchan.ecommerce.sales.reservation.ReservationDetails;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
-
 public class SalesHTTPTest {
+    @LocalServerPort
+    int port;
 
     @Autowired
     TestRestTemplate http;
-
-    @LocalServerPort
-    private int port;
 
     @Autowired
     ProductCatalog catalog;
 
     @Test
-    void itAllowToAcceptOffer(){
-        String productId=thereIsExampleProduct("Example Product",BigDecimal.valueOf(10.10));
+    void checkoutHappyPath() {
+        String productId = thereIsProduct("Example", BigDecimal.valueOf(10.10));
+        var addToCartUrl = asBaseURL(String.format("api/add-product/%s", productId));
 
-        String addProductURL=String.format("http://localhost:%s/%s/%s",port,"api/add-to-cart",productId);
-        ResponseEntity<Object> addProductResponse=http.postForEntity(addProductURL,null, Object.class);
+        ResponseEntity<Object> addToCartResponse = http.postForEntity(addToCartUrl, null, null);
 
-        String acceptOffer=String.format("http://localhost:%s/%s",port,"api/accept-offer");
-        AcceptOfferRequest acceptOfferRequest=new AcceptOfferRequest();
+        var getCurrentOfferUrl = asBaseURL("api/current-offer");
+        ResponseEntity<Offer> offerResponse = http.getForEntity(getCurrentOfferUrl, Offer.class);
 
+        var acceptOfferUrl = asBaseURL("api/accept-offer");
+        var acceptOfferRequest = new AcceptOfferRequest();
+        acceptOfferRequest
+                .setFirstName("john")
+                .setLastName("doe")
+                .setEmail("john.doe@example.com");
 
-        acceptOfferRequest.setFirstName("Mikołaj").setLastName("Suchan").setEmail("mikolaj.suchan@example");
-        ResponseEntity<ReservationDetail> reservationDetailResponseEntity=http.postForEntity(addProductURL,null, ReservationDetail.class);
+        ResponseEntity<ReservationDetails> reservationResponse = http.postForEntity(
+                acceptOfferUrl, acceptOfferRequest, ReservationDetails.class);
 
-        assertEquals(reservationDetailResponseEntity.getStatusCode(), HttpStatus.OK);
-        assertNotNull(reservationDetailResponseEntity.getBody().getReservationId());
-        assertNotNull(BigDecimal.valueOf(10.10),reservationDetailResponseEntity.getBody().getPaymentUrl());
+        var reservationDetails =reservationResponse.getBody();
+
+        assertThat(addToCartResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(offerResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(reservationResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        assertThat(reservationDetails.getPaymentUrl()).isNotBlank();
+        assertThat(reservationDetails.getReservationId()).isNotBlank();
+
 
     }
-    private String thereIsExampleProduct(String name, BigDecimal price) {
-        var id = catalog.addProduct(name, name,price);
+
+    private String asBaseURL(String addToCartUri) {
+        return String.format("http://localhost:%s/%s", port, addToCartUri);
+    }
+
+    private String thereIsProduct(String name, BigDecimal price) {
+        var id = catalog.addProduct(name, name);
         catalog.changePrice(id, price);
-        return "Products";
+
+        return id;
     }
 }

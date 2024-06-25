@@ -1,4 +1,4 @@
-package pl.msuchan.ecommerce.sales.payu;
+package pl.msuchan.ecommerce.payu;
 
 public class Status {
     String statusCode;

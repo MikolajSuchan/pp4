@@ -1,4 +1,4 @@
-package pl.msuchan.ecommerce.sales.payu;
+package pl.msuchan.ecommerce.payu;
 
 public class Buyer {
     String email,phone,firstName, lastName,language;

@@ -2,83 +2,57 @@ package pl.msuchan.ecommerce.payu;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
-import pl.msuchan.ecommerce.catalog.Product;
-import pl.msuchan.ecommerce.sales.payu.*;
-import java.math.BigDecimal;
+
 import java.util.Arrays;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PayuTest {
+
     @Test
-    void creatingNewPayment() {
+    void itRegisterNewPayment() {
         Payu payu = thereIsPayU();
+        OrderCreateRequest request = thereIsExampleOrderCreateRequest();
 
-        OrderCreateRequest orderCreateRequest = createExampleOrderCreateRequest();
+        OrderCreateResponse response = payu.handle(request);
 
-        OrderCreateResponse response = payu.handle(orderCreateRequest);
-
-        assertNotNull(response.getRedirectUri()); // Where to redirect customer
-        assertNotNull(response.getOrderId()); // transaction id
+        assertNotNull(response.getOrderId());
+        assertNotNull(response.getRedirectUri());
     }
 
-    private OrderCreateRequest createExampleOrderCreateRequest() {
-        OrderCreateRequest createRequest = new OrderCreateRequest();
-        createRequest
-                .setNotifyUrl("https://my.example.shop.msuchan.pl/api/order")
+    private OrderCreateRequest thereIsExampleOrderCreateRequest() {
+        var request = new OrderCreateRequest();
+        request
+                .setNotifyUrl("https://your.eshop.com/notify")
                 .setCustomerIp("127.0.0.1")
                 .setMerchantPosId("300746")
-                .setDescription("My ebook")
+                .setDescription("My digital product")
                 .setCurrencyCode("PLN")
-                .setTotalAmount(21000)
+                .setTotalAmount(15500)
                 .setExtOrderId(UUID.randomUUID().toString())
-                .setBuyer((new Buyer())
-                        .setEmail("john.doe.example.com")
-                        .setFirstName("John").setLastName("Doe")
+                .setBuyer(new Buyer()
+                        .setEmail("mikołaj.suchan@example.com")
+                        .setFirstName("mikołaj")
+                        .setLastName("suchan")
                         .setLanguage("pl")
                 )
-                .setProducts(Arrays.asList(new Product()
-                        .setId("")
-                        .setPrice(BigDecimal.valueOf(0))
-                        .setName("")
-                        .setDescription("")
+                .setProducts(Arrays.asList(
+                        new Product()
+                                .setName("Nice product")
+                                .setUnitPrice(15500)
+                                .setQuantity(1)
                 ));
-        return  createRequest;
+
+        return request;
     }
 
     private Payu thereIsPayU() {
-        return new Payu(new RestTemplate(), PayuCredentials.sandbox("123", "456"));
+        return new Payu(
+                new RestTemplate(),
+                PayuCredentials.sandbox(
+                        "300746",
+                        "2ee86a66e5d97e3fadc400c9f19b065d"
+                ));
     }
-
-//    {
-//        "notifyUrl": "https://your.eshop.com/notify",
-//            "customerIp": "127.0.0.1",
-//            "merchantPosId": "145227",
-//            "description": "RTV market",
-//            "currencyCode": "PLN",
-//            "totalAmount": "21000",
-//            "extOrderId":"2uikc6gjd99b4lxc75ip4k",
-//            "buyer": {
-//        "email": "john.doe@example.com",
-//                "phone": "654111654",
-//                "firstName": "John",
-//                "lastName": "Doe",
-//                "language": "pl"
-//    },
-//        "products": [
-//        {
-//            "name": "Wireless Mouse for Laptop",
-//                "unitPrice": "15000",
-//                "quantity": "1"
-//        },
-//        {
-//            "name": "HDMI cable",
-//                "unitPrice": "6000",
-//                "quantity": "1"
-//        }
-//        ]
-//    }
-
-
 }

@@ -1,15 +1,12 @@
-package pl.msuchan.ecommerce.sales.payu;
-
-import pl.msuchan.ecommerce.catalog.Product;
+package pl.msuchan.ecommerce.payu;
 
 import java.util.List;
 
 public class OrderCreateRequest {
-    String currencyCode, extOrderId,notifyUrl, merchantPosId, description;
+    String currencyCode, extOrderId,notifyUrl, merchantPosId, description,customerIp;
     Integer totalAmount;
     Buyer buyer;
     List<Product> products;
-    private String customerIp;
 
     public String getCurrencyCode() {
         return currencyCode;
@@ -28,8 +25,6 @@ public class OrderCreateRequest {
         this.totalAmount = totalAmount;
         return this;
     }
-
-
 
     public String getExtOrderId() {
         return extOrderId;

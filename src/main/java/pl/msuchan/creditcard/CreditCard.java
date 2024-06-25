@@ -15,9 +15,11 @@ public class CreditCard {
         if(isCreditBelowThreshold(creditlimitig)){
             throw new CreditBelowThresholdException();
         }
+
         this.creditlimitig = creditlimitig;
         this.balance=creditlimitig;
     }
+
     public void withdraw(BigDecimal money){
 
         if(isBelowBalance(money)<=0){
@@ -28,7 +30,7 @@ public class CreditCard {
     }
 
     private int isBelowBalance(BigDecimal money) {
-        return balance.subtract(money).compareTo(BigDecimal.valueOf(0));
+        return balance.subtract(money).compareTo(BigDecimal.ZERO);
     }
 
     private boolean isCreditAlreadyAssigned() {
@@ -36,7 +38,7 @@ public class CreditCard {
     }
 
     private static boolean isCreditBelowThreshold(BigDecimal creditlimitig) {
-        return creditlimitig.compareTo(BigDecimal.valueOf(100)) < 0;
+        return BigDecimal.valueOf(100).compareTo(creditlimitig) > 0;
     }
 
     public BigDecimal getBalance() {

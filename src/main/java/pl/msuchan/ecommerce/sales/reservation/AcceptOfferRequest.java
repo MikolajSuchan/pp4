@@ -1,9 +1,9 @@
-package pl.msuchan.ecommerce.sales.offering;
+package pl.msuchan.ecommerce.sales.reservation;
 
 public class AcceptOfferRequest {
-    String firstName;
-    String lastName;
-    String email;
+    private String firstName;
+    private String lastName;
+    private String email;
 
     public String getFirstName() {
         return firstName;
